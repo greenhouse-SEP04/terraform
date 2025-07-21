@@ -28,17 +28,18 @@ resource "aws_ecs_task_definition" "api" {
   memory                   = "1024"
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecs_task.arn
-  container_definitions    = jsonencode([
-    {
-      name      = "api"
-      image     = "${aws_ecr_repository.api.repository_url}:latest"
-      portMappings = [{ containerPort = 8080 }]
-      environment = [
-        { name = "AWS__TelemetryBucket", value = var.telemetry_bucket },
-        { name = "ConnectionStrings__DefaultConnection", value = module.db_secret.secret_string_json["connectionString"] }
-      ]
-    }
-  ])
+
+  container_definitions = jsonencode([{
+    name      = "api"
+    image     = "${aws_ecr_repository.api.repository_url}:latest"
+    portMappings = [{
+      containerPort = 8080
+    }]
+    environment = [
+      { name = "AWS__TelemetryBucket",                 value = var.telemetry_bucket },
+      { name = "ConnectionStrings__DefaultConnection", value = var.db_conn_string }
+    ]
+  }])
 }
 
 resource "aws_ecs_service" "api" {
@@ -47,16 +48,15 @@ resource "aws_ecs_service" "api" {
   task_definition = aws_ecs_task_definition.api.arn
   desired_count   = 2
   launch_type     = "FARGATE"
+
   network_configuration {
-    subnets         = module.network.public_subnets
-    security_groups = [aws_security_group.api.id]
+    subnets         = var.public_subnets
+    security_groups = [var.security_group_id]
   }
+
   load_balancer {
-    target_group_arn = aws_lb_target_group.api.arn
+    target_group_arn = var.alb_target_group_arn
     container_name   = "api"
     container_port   = 8080
   }
-  depends_on = [aws_lb_listener.api]
 }
-
-# ALB, TG, Listener and SG omitted for brevity
