@@ -34,3 +34,10 @@ variable "ml_artifact_key" {
   type        = string
   default     = "ml_service.zip"
 }
+
+# Optionally skip RDS creation locally
+variable "use_local_rds" {
+  description = "Set to false to skip RDS module (use Docker‐Compose Postgres)"
+  type        = bool
+  default     = true
+}
