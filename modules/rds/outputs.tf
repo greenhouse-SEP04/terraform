@@ -1,6 +1,7 @@
-output "secret_string_json" {
-  value = module.db_secret.secret_string_json
-}
+ output "secret_string" {
+   description = "The JSON‐encoded database credentials stored in Secrets Manager"
+   value       = module.db_secret.secret_string
+ }
 
 output "secret_arn" {
   value = module.db_secret.secret_arn

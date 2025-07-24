@@ -1,4 +1,6 @@
-data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {
+  provider = aws.real
+}
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
@@ -7,6 +9,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public" {
   count                   = 2
+  provider                = aws
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
   availability_zone       = data.aws_availability_zones.available.names[count.index]
@@ -16,6 +19,7 @@ resource "aws_subnet" "public" {
 
 resource "aws_subnet" "private" {
   count             = 2
+  provider          = aws
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + 10)
   availability_zone = data.aws_availability_zones.available.names[count.index]

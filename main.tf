@@ -93,7 +93,7 @@ resource "aws_lb_listener" "api" {
 module "api" {
   source               = "./modules/ecs-api"
   telemetry_bucket     = var.telemetry_bucket
-  db_conn_string       = module.db.secret_string_json["connectionString"]
+  db_conn_string       = module.db.secret_string
   public_subnets       = module.network.public_subnets
   security_group_id    = aws_security_group.api.id
   alb_target_group_arn = aws_lb_target_group.api.arn
