@@ -1,7 +1,8 @@
 provider "aws" {
-  # default provider: LocalStack
   region = var.aws_region
 
+  access_key = "test"
+  secret_key = "test"
 
   s3_use_path_style           = true
   skip_credentials_validation = true
@@ -15,10 +16,4 @@ provider "aws" {
     ecs    = "http://localhost:4566"
     ecr    = "http://localhost:4566"
   }
-}
-
-provider "aws" {
-  alias  = "real"
-  region = var.aws_region
-  # Credentials via env
 }
