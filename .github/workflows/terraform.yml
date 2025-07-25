@@ -16,7 +16,7 @@ jobs:
       TF_VAR_db_name:            ${{ secrets.DB_NAME }}
       TF_VAR_ml_artifact_bucket: ${{ secrets.ML_BUCKET }}
       TF_VAR_ml_artifact_key:    "ml_service.zip"
-      AWS_REGION:                eu-central-1
+      AWS_REGION:                us-east-1
 
     steps:
       - name: Checkout code

@@ -13,9 +13,12 @@ resource "aws_vpc" "main" {
 # 2. Availability Zones (static for local dev)
 # ───────────────────────────────────────────────────────────────────────────────
 locals {
-  # since LocalStack doesn't support DescribeAvailabilityZones,
-  # we just assume two AZs in eu-central-1
-  availability_zones = ["eu-central-1a", "eu-central-1b"]
+  region = var.aws_region
+
+  availability_zones = [
+    "${local.region}a",
+    "${local.region}b",
+  ]
 }
 
 # ───────────────────────────────────────────────────────────────────────────────

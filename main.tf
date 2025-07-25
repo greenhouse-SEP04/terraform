@@ -1,6 +1,7 @@
 # 1 Network
 module "network" {
   source = "./modules/network"
+  aws_region = var.aws_region
 }
 
 # 2 API Security Group
