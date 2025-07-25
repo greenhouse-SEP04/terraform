@@ -1,4 +1,4 @@
-aws_region           = "eu-central-1"
+aws_region           = "us-east-1"
 telemetry_bucket     = "greenhouse-telemetry-bucket"
 site_bucket          = "greenhouse-web-site"
 db_username          = "postgres"
