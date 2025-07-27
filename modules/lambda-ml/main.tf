@@ -28,8 +28,8 @@ resource "aws_iam_role_policy_attachment" "lambda_cloudwatch" {
 resource "aws_lambda_function" "ml" {
   function_name = "greenhouse-ml"
   role          = aws_iam_role.lambda_exec.arn
-  s3_bucket     = var.ml_artifact_bucket
-  s3_key        = var.ml_artifact_key
+  s3_bucket     = var.ml_s3_bucket
+  s3_key        = var.ml_s3_key
   handler       = "handler.handler"
   runtime       = "python3.11"
   timeout       = 60

@@ -49,6 +49,13 @@ resource "aws_s3_bucket_acl" "ml_artifacts_acl" {
   acl    = "private"
 }
 
+resource "aws_s3_object" "ml_zip" {
+  bucket = aws_s3_bucket.ml_artifacts.id
+  key    = var.ml_artifact_key           # "ml_service.zip"
+  source = "${path.module}/../mal/build/ml_service.zip"
+  etag   = filemd5("${path.module}/../mal/build/ml_service.zip")
+}
+
 
 # 5 Static Site (S3 + CloudFront)
 module "static_site" {
