@@ -49,11 +49,21 @@ resource "aws_s3_bucket_acl" "ml_artifacts_acl" {
   acl    = "private"
 }
 
+data "http" "mal_zip" {
+  url             = "https://github.com/greenhouse-SEP04/mal/releases/download/${var.mal_tag}/ml_service.zip"
+  request_headers = { Accept = "application/octet-stream" }
+}
+
+resource "local_file" "mal_zip" {
+  filename = "${path.module}/.mal.zip"
+  content  = data.http.mal_zip.body
+}
+
 resource "aws_s3_object" "ml_zip" {
   bucket = aws_s3_bucket.ml_artifacts.id
-  key    = var.ml_artifact_key           # "ml_service.zip"
-  source = "${path.module}/../mal/build/ml_service.zip"
-  etag   = filemd5("${path.module}/../mal/build/ml_service.zip")
+  key    = var.ml_artifact_key
+  source = local_file.mal_zip.filename
+  etag   = filemd5(local_file.mal_zip.filename)
 }
 
 
