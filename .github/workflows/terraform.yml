@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Inject real‐AWS bucket names & DB creds from GitHub Secrets
       TF_VAR_telemetry_bucket:   ${{ secrets.TELEMETRY_BUCKET }}
       TF_VAR_site_bucket:        ${{ secrets.SITE_BUCKET }}
       TF_VAR_db_username:        ${{ secrets.DB_USERNAME }}
