@@ -50,7 +50,7 @@ resource "aws_s3_bucket_acl" "ml_artifacts_acl" {
 }
 
 data "http" "mal_zip" {
-  url             = "https://github.com/greenhouse-SEP04/mal/releases/download/${var.mal_tag}/ml_service.zip"
+  url             = "https://github.com/greenhouse-SEP04/mal/releases/download/1.0.0/ml_service.zip"
   request_headers = { Accept = "application/octet-stream" }
 }
 
