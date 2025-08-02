@@ -1,30 +1,24 @@
-# ───────────────────────────────────────────────────────────────
-# Terraform state (do NOT commit)
-# ───────────────────────────────────────────────────────────────
+# Ignore Terraform state files
 *.tfstate
 *.tfstate.backup
 
-# ───────────────────────────────────────────────────────────────
-# Crash logs
-# ───────────────────────────────────────────────────────────────
+# Ignore crash logs
 crash.log
 
-# ───────────────────────────────────────────────────────────────
-# Modules, providers, plugin cache, etc.
-# ───────────────────────────────────────────────────────────────
+# Ignore the .terraform directory (contains modules, providers, binaries, etc.)
 .terraform/
 
-# ───────────────────────────────────────────────────────────────
-# Override & variable files (user-specific, sensitive)
-# ───────────────────────────────────────────────────────────────
+# Ignore override files (user-specific settings)
 *.tfvars
 *.tfvars.json
+
+# Ignore sensitive variable definition files (you might want to commit *.tfvars.sample instead)
 secret.tfvars
 *.auto.tfvars
 
-# ───────────────────────────────────────────────────────────────
-# CLI & plan outputs
-# ───────────────────────────────────────────────────────────────
+# Ignore CLI configuration file
 .terraformrc
 terraform.rc
+
+# Ignore plan output
 *.tfplan
