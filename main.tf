@@ -1,6 +1,6 @@
 # 1 Network
 module "network" {
-  source = "./modules/network"
+  source     = "./modules/network"
   aws_region = var.aws_region
 }
 
@@ -49,21 +49,14 @@ resource "aws_s3_bucket_acl" "ml_artifacts_acl" {
   acl    = "private"
 }
 
-data "http" "mal_zip" {
-  url             = "https://github.com/greenhouse-SEP04/mal/releases/download/1.0.0/ml_service.zip"
-  request_headers = { Accept = "application/octet-stream" }
-}
-
-resource "local_file" "mal_zip" {
-  filename = "${path.module}/.mal.zip"
-  content  = data.http.mal_zip.body
-}
-
+# Upload your locally built ZIP to S3
 resource "aws_s3_object" "ml_zip" {
   bucket = aws_s3_bucket.ml_artifacts.id
   key    = var.ml_artifact_key
-  source = local_file.mal_zip.filename
-  etag   = filemd5(local_file.mal_zip.filename)
+
+  # points to repo: ../mal/build/ml_service.zip
+  source = "${path.root}/../mal/build/ml_service.zip"
+  etag   = filemd5("${path.root}/../mal/build/ml_service.zip")
 }
 
 
@@ -75,11 +68,19 @@ module "static_site" {
 
 # 6 Machine Learning Lambda
 module "lambda_ml" {
-  source           = "./modules/lambda-ml"
-  ml_s3_bucket     = var.ml_artifact_bucket
-  ml_s3_key        = var.ml_artifact_key
-  telemetry_bucket = var.telemetry_bucket
+  source               = "./modules/lambda-ml"
+  telemetry_bucket     = var.telemetry_bucket
+  schedule_expression  = "rate(1 hour)"
+
+  # where the code ZIP is
+  ml_artifact_bucket   = var.ml_artifact_bucket
+  ml_artifact_key      = var.ml_artifact_key
+
+  # ensure the ZIP exists in S3 before creating Lambda
+  depends_on = [aws_s3_object.ml_zip]
 }
+
+
 
 # 7 Application Load Balancer
 resource "aws_lb" "api" {

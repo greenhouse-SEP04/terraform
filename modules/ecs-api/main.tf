@@ -30,13 +30,13 @@ resource "aws_ecs_task_definition" "api" {
   execution_role_arn       = aws_iam_role.ecs_task.arn
 
   container_definitions = jsonencode([{
-    name      = "api"
-    image     = "${aws_ecr_repository.api.repository_url}:latest"
+    name  = "api"
+    image = "${aws_ecr_repository.api.repository_url}:latest"
     portMappings = [{
       containerPort = 8080
     }]
     environment = [
-      { name = "AWS__TelemetryBucket",                 value = var.telemetry_bucket },
+      { name = "AWS__TelemetryBucket", value = var.telemetry_bucket },
       { name = "ConnectionStrings__DefaultConnection", value = var.db_conn_string }
     ]
   }])

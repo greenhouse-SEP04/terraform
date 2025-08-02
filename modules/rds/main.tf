@@ -31,7 +31,7 @@ module "db_secret" {
   source  = "terraform-aws-modules/secrets-manager/aws"
   version = ">= 1.0.0"
 
-  name          = "greenhouse-db-creds"
+  name = "greenhouse-db-creds"
   secret_string = jsonencode({
     username = var.db_username
     password = random_password.db_pass.result
