@@ -17,3 +17,7 @@ output "db_secret_arn" {
   description = "ARN of Secrets Manager secret for RDS credentials"
   value       = module.db.secret_arn
 }
+
+output "cdn_distribution_id" {
+  value = module.static_site.cdn_distribution_id
+}
