@@ -41,3 +41,18 @@ variable "use_local_rds" {
   type        = bool
   default     = true
 }
+variable "mal_release_tag" {
+  description = "GitHub release tag for ML artifacts"
+  type        = string
+  default     = "v1.0.0"
+}
+
+variable "mal_release_owner" {
+  type        = string
+  default     = "greenhouse-SEP04"
+}
+
+variable "mal_release_repo" {
+  type        = string
+  default     = "mal"
+}

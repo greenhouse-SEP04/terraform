@@ -98,7 +98,7 @@ resource "aws_lambda_function" "ml" {
       MIN_SAMPLES        = "10"
       S3_BUCKET          = var.telemetry_bucket
       AWS_DEFAULT_REGION = "us-east-1"
-      AWS_ENDPOINT_URL   = "http://localhost:4566"
+  #   AWS_ENDPOINT_URL   = "http://localhost:4566"
     }
   }
 
