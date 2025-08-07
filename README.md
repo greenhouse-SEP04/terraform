@@ -64,25 +64,13 @@ terraform/
 1. **Start the emulators & database**
 
    ```bash
-   cd ../dev-env
+   cd path/to/your/dev-env/repo
    docker‑compose up -d localstack db
    ```
 
-2. **Seed environment variables for LocalStack**
-
+2. **Plan & apply**
+From the root of this repository (the terraform/ directory), run:
    ```bash
-   export AWS_REGION=us-east-1
-   export AWS_ACCESS_KEY_ID=test
-   export AWS_SECRET_ACCESS_KEY=test
-   export AWS_ENDPOINT_URL=http://localhost:4566
-   alias tflocal='AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test \
-                 terraform'
-   ```
-
-3. **Plan & apply**
-
-   ```bash
-   cd ../terraform
    tflocal init -reconfigure
    tflocal apply -auto-approve -var "use_localstack=true"
    ```
@@ -95,6 +83,17 @@ terraform/
    website_url        = "6c8afb79.cloudfront.localhost.localstack.cloud"
    ml_lambda_arn      = "arn:aws:lambda:us-east-1:000000000000:function:greenhouse-ml"
    …
+   ```
+
+3. **Seed environment variables for LocalStack**
+
+   ```bash
+   export AWS_REGION=us-east-1
+   export AWS_ACCESS_KEY_ID=test
+   export AWS_SECRET_ACCESS_KEY=test
+   export AWS_ENDPOINT_URL=http://localhost:4566
+   alias tflocal='AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test \
+                 terraform'
    ```
 
 4. **Push the API image to LocalStack ECR**
@@ -138,9 +137,7 @@ With real AWS credentials and SSH secrets configured:
 
 ```bash
 terraform init
-terraform apply -auto-approve \
-  -var "mal_release_tag=v1.0.0" \
-  -var "use_localstack=false"
+terraform apply -auto-approve
 ```
 
 The GitHub Actions workflow **terraform‑cd.yml** is ready to execute the same steps on every push to `main` once you uncomment the AWS steps and add credentials to the repo secrets.
