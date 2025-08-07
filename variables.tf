@@ -7,26 +7,32 @@ variable "aws_region" {
 variable "telemetry_bucket" {
   description = "Telemetry S3 bucket name"
   type        = string
+  default     = "greenhouse-telemetry-bucket"
+
 }
 
 variable "site_bucket" {
   description = "Static site S3 bucket name"
   type        = string
+  default     = "greenhouse-web-site"
 }
 
 variable "db_username" {
   description = "RDS master username"
   type        = string
+  default     = "postgres"
 }
 
 variable "db_name" {
   description = "RDS database name"
   type        = string
+  default     = "greenhouse"
 }
 
 variable "ml_artifact_bucket" {
   description = "S3 bucket for ML ZIP upload"
   type        = string
+  default     = "greenhouse-ml-artifacts"
 }
 
 variable "ml_artifact_key" {

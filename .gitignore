@@ -1,24 +1,14 @@
-# Ignore Terraform state files
-*.tfstate
-*.tfstate.backup
-
-# Ignore crash logs
-crash.log
-
-# Ignore the .terraform directory (contains modules, providers, binaries, etc.)
+# Local Terraform directories
 .terraform/
 
-# Ignore override files (user-specific settings)
-*.tfvars
-*.tfvars.json
+# Terraform state and lockfiles
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
 
-# Ignore sensitive variable definition files (you might want to commit *.tfvars.sample instead)
-secret.tfvars
-*.auto.tfvars
+# Terraform crash logs
+crash.log
 
-# Ignore CLI configuration file
+# CLI configuration files
 .terraformrc
 terraform.rc
-
-# Ignore plan output
-*.tfplan

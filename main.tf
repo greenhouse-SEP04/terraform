@@ -17,11 +17,8 @@ locals {
   mal_layers_dir   = "${path.root}/../mal/.lambda_layers"
   mal_build_dir    = "${path.root}/../mal/build"
 
-  # Only needed for private repos; leave empty for public
-  gh_headers = var.github_token == "" ? {} : {
-    Authorization = "Bearer ${var.github_token}"
-    Accept        = "application/octet-stream"
-  }
+  # Public repo: no headers needed
+  gh_headers = {}
 }
 
 # sk1.zip
@@ -122,7 +119,7 @@ resource "aws_s3_object" "ml_zip" {
   key    = var.ml_artifact_key
 
   source = "${path.root}/../mal/build/ml_service.zip"
-  etag   = filemd5("${path.root}/../mal/build/ml_service.zip")
+  # etag   = filemd5("${path.root}/../mal/build/ml_service.zip")
 
   depends_on = [local_file.ml_svc]
 }

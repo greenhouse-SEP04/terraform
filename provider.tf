@@ -1,11 +1,13 @@
 provider "aws" {
   region            = var.aws_region
+  # For local deploymeny using localstack
   access_key        = "test"
   secret_key        = "test"
   s3_use_path_style = true
 
   endpoints {
     apigateway     = "http://localhost:4566"
+    apigatewayv2   = "http://localhost:4566"
     cloudformation = "http://localhost:4566"
     cloudwatch     = "http://localhost:4566"
     cloudwatchlogs = "http://localhost:4566"
@@ -23,6 +25,7 @@ provider "aws" {
     elbv2          = "http://localhost:4566"
     cloudfront     = "http://localhost:4566"
     events         = "http://localhost:4566"
+
   }
   skip_credentials_validation = true
   skip_region_validation      = true
