@@ -62,3 +62,9 @@ variable "mal_release_repo" {
   type        = string
   default     = "mal"
 }
+
+variable "use_localstack" {
+  description = "Run against LocalStack instead of AWS"
+  type        = bool
+  default     = false
+}

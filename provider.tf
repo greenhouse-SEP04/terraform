@@ -1,34 +1,18 @@
+# provider.tf   (single provider block – no more commenting!)
 provider "aws" {
-  region            = var.aws_region
-  # For local deploymeny using localstack
-  access_key        = "test"
-  secret_key        = "test"
-  s3_use_path_style = true
+  region                  = var.aws_region
 
-  endpoints {
-    apigateway     = "http://localhost:4566"
-    apigatewayv2   = "http://localhost:4566"
-    cloudformation = "http://localhost:4566"
-    cloudwatch     = "http://localhost:4566"
-    cloudwatchlogs = "http://localhost:4566"
-    dynamodb       = "http://localhost:4566"
-    ec2            = "http://localhost:4566"
-    ecr            = "http://localhost:4566"
-    ecs            = "http://localhost:4566"
-    iam            = "http://localhost:4566"
-    lambda         = "http://localhost:4566"
-    rds            = "http://localhost:4566"
-    secretsmanager = "http://localhost:4566"
-    s3             = "http://localhost:4566"
-    sts            = "http://localhost:4566"
-    elb            = "http://localhost:4566"
-    elbv2          = "http://localhost:4566"
-    cloudfront     = "http://localhost:4566"
-    events         = "http://localhost:4566"
+  # use dummy creds only when we’re on LocalStack
+  access_key              = var.use_localstack ? "test" : null
+  secret_key              = var.use_localstack ? "test" : null
+  s3_use_path_style       = var.use_localstack
 
-  }
-  skip_credentials_validation = true
-  skip_region_validation      = true
-  skip_requesting_account_id  = true
-  skip_metadata_api_check     = true
+  # LocalStack endpoints (empty map = normal AWS URLs)
+  endpoints               = var.use_localstack ? local.localstack_endpoints : {}
+
+  # Skip SDK checks only for LocalStack
+  skip_credentials_validation = var.use_localstack
+  skip_region_validation      = var.use_localstack
+  skip_requesting_account_id  = var.use_localstack
+  skip_metadata_api_check     = var.use_localstack
 }

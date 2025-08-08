@@ -41,7 +41,7 @@ jobs:
       #   run: terraform validate
 
       # - name: Terraform Plan
-      #   run: terraform plan -input=false -var-file="envs/prod.tfvars" -out tfplan
+      #   run: terraform plan -input=false -out tfplan
 
       # - name: Terraform Apply
       #   if: github.event_name == 'push'
